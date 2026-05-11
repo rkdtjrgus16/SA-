@@ -38,6 +38,23 @@ export function seedIfEmpty() {
   }
 }
 
+/** 시드에 정의된 상품 id에 대해 이미지 URL을 최신 시드와 맞춥니다(기존 localStorage 데이터 갱신용). */
+export function syncSeedProductImages() {
+  const products = read(KEYS.products, []);
+  if (!products.length) return;
+  const seedMap = Object.fromEntries(SEED_PRODUCTS.map((p) => [p.id, p.image]));
+  let changed = false;
+  const next = products.map((p) => {
+    const img = seedMap[p.id];
+    if (img && p.image !== img) {
+      changed = true;
+      return { ...p, image: img };
+    }
+    return p;
+  });
+  if (changed) write(KEYS.products, next);
+}
+
 function uid(prefix) {
   return `${prefix}_${Date.now().toString(36)}${Math.random().toString(36).slice(2, 7)}`;
 }

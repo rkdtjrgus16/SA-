@@ -8,9 +8,11 @@ import {
   localReviews,
   localOrders,
   seedIfEmpty,
+  syncSeedProductImages,
 } from './localStore';
 
 seedIfEmpty();
+syncSeedProductImages();
 
 // ─── Auth API ───────────────────────────────────────────────
 export const AuthAPI = {

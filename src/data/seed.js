@@ -5,7 +5,8 @@ export const SEED_PRODUCTS = [
     id: 'p1',
     name: '에어리 무선 이어폰',
     price: 89000,
-    image: 'https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?w=600',
+    image:
+      'https://cdn.dummyjson.com/product-images/mobile-accessories/apple-airpods/1.webp',
     description: '하루 종일 가벼운 착용감과 깨끗한 사운드를 제공하는 무선 이어폰입니다.',
     isHot: true,
     category: '전자',
@@ -15,7 +16,8 @@ export const SEED_PRODUCTS = [
     id: 'p2',
     name: '모던 데스크 램프',
     price: 42000,
-    image: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=600',
+    image:
+      'https://cdn.dummyjson.com/product-images/home-decoration/table-lamp/1.webp',
     description: '눈이 편안한 3단계 색온도 조절과 USB 충전 포트를 탑재한 LED 램프.',
     isHot: true,
     category: '인테리어',
@@ -25,7 +27,8 @@ export const SEED_PRODUCTS = [
     id: 'p3',
     name: '클래식 캔버스 백팩',
     price: 65000,
-    image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600',
+    image:
+      'https://cdn.dummyjson.com/product-images/womens-bags/white-faux-leather-backpack/1.webp',
     description: '15인치 노트북이 들어가는 데일리 백팩. 발수 코팅 처리.',
     isHot: false,
     category: '패션',
@@ -35,7 +38,8 @@ export const SEED_PRODUCTS = [
     id: 'p4',
     name: '오가닉 코튼 티셔츠',
     price: 24900,
-    image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600',
+    image:
+      'https://cdn.dummyjson.com/product-images/mens-shirts/man-short-sleeve-shirt/1.webp',
     description: '유기농 면 100%로 부드러운 촉감과 통기성이 우수한 베이직 티셔츠.',
     isHot: true,
     category: '패션',
@@ -45,7 +49,8 @@ export const SEED_PRODUCTS = [
     id: 'p5',
     name: '아로마 디퓨저 세트',
     price: 38000,
-    image: 'https://images.unsplash.com/photo-1602928321679-560bb453f190?w=600',
+    image:
+      'https://cdn.dummyjson.com/product-images/fragrances/calvin-klein-ck-one/1.webp',
     description: '천연 에센셜 오일 3종이 포함된 도자기 디퓨저 세트.',
     isHot: false,
     category: '인테리어',
@@ -55,7 +60,8 @@ export const SEED_PRODUCTS = [
     id: 'p6',
     name: '스테인리스 텀블러',
     price: 19800,
-    image: 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=600',
+    image:
+      'https://cdn.dummyjson.com/product-images/kitchen-accessories/black-aluminium-cup/1.webp',
     description: '12시간 보온/보냉이 가능한 이중벽 진공 단열 텀블러 500ml.',
     isHot: true,
     category: '생활',
