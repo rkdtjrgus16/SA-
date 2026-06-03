@@ -65,10 +65,6 @@ export default function Login() {
         <p className="muted small">
           계정이 없으신가요? <Link to="/signup">회원가입</Link>
         </p>
-        <div className="hint-box">
-          관리자 계정: <b>rkdtjrgus16@gmail.com</b><br />
-          계정이 없으면 회원가입 후 이용해 주세요.
-        </div>
       </div>
     </div>
   );
