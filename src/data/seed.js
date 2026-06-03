@@ -67,6 +67,50 @@ export const SEED_PRODUCTS = [
     category: '생활',
     stock: 80,
   },
+  {
+    id: 'p7',
+    name: '신선 사과 1.5kg',
+    price: 18900,
+    image:
+      'https://cdn.dummyjson.com/product-images/groceries/apple/thumbnail.webp',
+    description: '산지 직송 아삭하고 달콤한 국내산 사과. 선물용으로도 인기 만점.',
+    isHot: true,
+    category: '음식',
+    stock: 60,
+  },
+  {
+    id: 'p8',
+    name: '국내산 천연 벌꿀 500g',
+    price: 24000,
+    image:
+      'https://cdn.dummyjson.com/product-images/groceries/honey-jar/thumbnail.webp',
+    description: '잡초 없는 청정 지역에서 채취한 아카시아 꿀. 첨가물 없는 100% 순수 벌꿀.',
+    isHot: false,
+    category: '음식',
+    stock: 40,
+  },
+{
+    id: 'p10',
+    name: '한우 스테이크 200g',
+    price: 38000,
+    image:
+      'https://cdn.dummyjson.com/product-images/groceries/beef-steak/thumbnail.webp',
+    description: '1++ 등급 국내산 한우 스테이크. 두툼한 두께로 육즙이 풍부합니다. 냉장 직배송.',
+    isHot: true,
+    category: '음식',
+    stock: 25,
+  },
+  {
+    id: 'p11',
+    name: '볶음 견과류 혼합 200g',
+    price: 12500,
+    image:
+      'https://images.unsplash.com/photo-1543158181-1274e5362710?w=400&fit=crop',
+    description: '아몬드·캐슈넛·호두·피칸을 황금 비율로 혼합. 무염 저온 볶음 가공.',
+    isHot: false,
+    category: '음식',
+    stock: 70,
+  },
 ];
 
 export const SEED_REVIEWS = [

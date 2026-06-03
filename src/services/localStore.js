@@ -3,6 +3,11 @@
 
 import { SEED_PRODUCTS, SEED_REVIEWS } from '../data/seed';
 
+const ADMIN_USERS = [
+  { email: 'demo@user.com', password: 'demo1234' },
+  { email: 'rkdtjrgus16@gmail.com', password: 'rkd@132495' },
+];
+
 const KEYS = {
   products: 'shop:products',
   reviews: 'shop:reviews',
@@ -32,9 +37,50 @@ export function seedIfEmpty() {
     write(KEYS.reviews, SEED_REVIEWS);
   }
   if (!localStorage.getItem(KEYS.users)) {
-    write(KEYS.users, [
-      { email: 'demo@user.com', password: 'demo1234', isAdmin: true },
-    ]);
+    write(KEYS.users, ADMIN_USERS.map((u) => ({ ...u, isAdmin: true })));
+  }
+}
+
+/** 관리자 계정이 localStorage에 없으면 추가하고, 있으면 isAdmin을 true로 보장합니다. */
+export function syncAdminUsers() {
+  const adminEmails = new Set(ADMIN_USERS.map((u) => u.email));
+  const users = read(KEYS.users, []);
+
+  const updated = users.map((u) =>
+    adminEmails.has(u.email) ? { ...u, isAdmin: true } : u,
+  );
+
+  ADMIN_USERS.forEach(({ email, password }) => {
+    if (!updated.find((u) => u.email === email)) {
+      updated.push({ email, password, isAdmin: true });
+    }
+  });
+
+  write(KEYS.users, updated);
+
+  const current = read(KEYS.currentUser, null);
+  if (current && adminEmails.has(current.email) && !current.isAdmin) {
+    write(KEYS.currentUser, { ...current, isAdmin: true });
+  }
+}
+
+/** 시드에 새로 추가된 상품을 기존 localStorage에 병합합니다. */
+export function syncNewSeedProducts() {
+  const products = read(KEYS.products, []);
+  const existingIds = new Set(products.map((p) => p.id));
+  const newProducts = SEED_PRODUCTS.filter((p) => !existingIds.has(p.id));
+  if (newProducts.length > 0) {
+    write(KEYS.products, [...products, ...newProducts]);
+  }
+}
+
+/** 시드에서 제거된 상품을 localStorage에서도 삭제합니다. */
+export function syncRemovedSeedProducts() {
+  const REMOVED_IDS = ['p9'];
+  const products = read(KEYS.products, []);
+  const filtered = products.filter((p) => !REMOVED_IDS.includes(p.id));
+  if (filtered.length !== products.length) {
+    write(KEYS.products, filtered);
   }
 }
 
@@ -141,6 +187,11 @@ export const localReviews = {
 
 // ─── Orders (간단한 마이페이지용) ─────────────────────────
 export const localOrders = {
+  list() {
+    return Promise.resolve(
+      read(KEYS.orders, []).sort((a, b) => b.createdAt - a.createdAt),
+    );
+  },
   byUser(email) {
     return Promise.resolve(
       read(KEYS.orders, [])

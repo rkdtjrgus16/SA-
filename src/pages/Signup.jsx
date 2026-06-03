@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { EMAIL_PENDING } from '../services/supabaseAuth';
 
 export default function Signup() {
   const { signUp } = useAuth();
@@ -11,10 +12,12 @@ export default function Signup() {
   const [confirm, setConfirm] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [info, setInfo] = useState('');
 
   const onSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setInfo('');
     if (password.length < 6) {
       setError('비밀번호는 6자 이상이어야 합니다.');
       return;
@@ -25,7 +28,11 @@ export default function Signup() {
     }
     setLoading(true);
     try {
-      await signUp(email, password);
+      const result = await signUp(email, password);
+      if (result?.__type === EMAIL_PENDING) {
+        setInfo('가입 확인 이메일을 발송했습니다. 이메일을 확인한 후 로그인해 주세요.');
+        return;
+      }
       navigate('/', { replace: true });
     } catch (err) {
       setError(err.message || '회원가입에 실패했습니다.');
@@ -33,6 +40,20 @@ export default function Signup() {
       setLoading(false);
     }
   };
+
+  if (info) {
+    return (
+      <div className="container narrow">
+        <div className="card form-card">
+          <h2>이메일을 확인해 주세요 ✉️</h2>
+          <div className="alert success" style={{ marginTop: 12 }}>{info}</div>
+          <p className="muted small" style={{ marginTop: 16 }}>
+            이미 확인하셨나요? <Link to="/login">로그인</Link>
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="container narrow">

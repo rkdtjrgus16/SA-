@@ -661,6 +661,157 @@ main {
   min-width: 0;
 }
 
+/* ─── 관리자 탭 ──────────────────────────────────── */
+.admin-tabs {
+  display: flex;
+  gap: 4px;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 28px;
+}
+.admin-tab-btn {
+  background: none;
+  border: none;
+  padding: 10px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: color 0.15s, border-color 0.15s;
+  font-family: inherit;
+}
+.admin-tab-btn:hover {
+  color: var(--primary);
+}
+.admin-tab-btn.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+
+/* ─── 주문 관리 ──────────────────────────────────── */
+.order-admin-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.order-admin-row {
+  padding: 0;
+  overflow: hidden;
+}
+.order-admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  cursor: pointer;
+  transition: background 0.15s;
+  gap: 12px;
+}
+.order-admin-header:hover {
+  background: var(--bg);
+}
+.order-admin-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.order-admin-email {
+  font-weight: 600;
+  font-size: 14px;
+}
+.order-admin-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+}
+.order-admin-total {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--primary);
+}
+.order-admin-toggle {
+  color: var(--muted);
+  font-size: 12px;
+}
+.order-admin-detail {
+  border-top: 1px solid var(--border);
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: var(--bg);
+}
+.order-admin-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.order-admin-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+.order-admin-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.order-admin-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+.order-admin-item img {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 6px;
+  background: var(--bg);
+  flex-shrink: 0;
+}
+.order-item-name {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 2px;
+}
+.order-item-subtotal {
+  font-weight: 700;
+  font-size: 14px;
+  white-space: nowrap;
+  margin: 0;
+  flex-shrink: 0;
+}
+.order-admin-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--muted);
+}
+.order-admin-footer code {
+  font-size: 12px;
+  background: var(--border);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
 /* ─── AI 공통 (배지 / 버튼) ───────────────────────── */
 .ai-badge {
   display: inline-block;

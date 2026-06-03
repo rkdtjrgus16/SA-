@@ -1,6 +1,8 @@
-// 통합 API: Firebase 가 설정되어 있으면 Firebase 를, 아니면 localStorage 를 사용합니다.
+// 통합 API: Supabase → Firebase → localStorage 순으로 우선 사용합니다.
 // 화면(컴포넌트)에서는 이 모듈만 import 하면 됩니다.
 
+import { isSupabaseConfigured } from '../supabase';
+import { supabaseAuth } from './supabaseAuth';
 import { isFirebaseConfigured, auth, db } from '../firebase';
 import {
   localAuth,
@@ -9,39 +11,49 @@ import {
   localOrders,
   seedIfEmpty,
   syncSeedProductImages,
+  syncNewSeedProducts,
+  syncRemovedSeedProducts,
+  syncAdminUsers,
 } from './localStore';
 
 seedIfEmpty();
 syncSeedProductImages();
+syncNewSeedProducts();
+syncRemovedSeedProducts();
+syncAdminUsers();
 
 // ─── Auth API ───────────────────────────────────────────────
 export const AuthAPI = {
   async signUp(email, password) {
+    if (isSupabaseConfigured) return supabaseAuth.signUp(email, password);
     if (!isFirebaseConfigured) return localAuth.signUp(email, password);
     const { createUserWithEmailAndPassword } = await import('firebase/auth');
     const cred = await createUserWithEmailAndPassword(auth, email, password);
     return { email: cred.user.email, isAdmin: false };
   },
   async signIn(email, password) {
+    if (isSupabaseConfigured) return supabaseAuth.signIn(email, password);
     if (!isFirebaseConfigured) return localAuth.signIn(email, password);
     const { signInWithEmailAndPassword } = await import('firebase/auth');
     const cred = await signInWithEmailAndPassword(auth, email, password);
     return { email: cred.user.email, isAdmin: false };
   },
   async signOut() {
+    if (isSupabaseConfigured) return supabaseAuth.signOut();
     if (!isFirebaseConfigured) return localAuth.signOut();
     const { signOut } = await import('firebase/auth');
     return signOut(auth);
   },
   current() {
+    if (isSupabaseConfigured) return supabaseAuth.current();
     if (!isFirebaseConfigured) return localAuth.current();
     return auth?.currentUser
       ? { email: auth.currentUser.email, isAdmin: false }
       : null;
   },
   async onChange(cb) {
+    if (isSupabaseConfigured) return supabaseAuth.onChange(cb);
     if (!isFirebaseConfigured) {
-      // localStorage 모드에서는 storage 이벤트로 동기화
       const handler = () => cb(localAuth.current());
       window.addEventListener('storage', handler);
       cb(localAuth.current());
@@ -126,6 +138,13 @@ export const ReviewsAPI = {
 
 // ─── Orders API (간단 버전) ─────────────────────────────────
 export const OrdersAPI = {
+  async list() {
+    if (!isFirebaseConfigured) return localOrders.list();
+    const { collection, getDocs, orderBy, query } = await import('firebase/firestore');
+    const q = query(collection(db, 'orders'), orderBy('createdAt', 'desc'));
+    const snap = await getDocs(q);
+    return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+  },
   async byUser(email) {
     if (!isFirebaseConfigured) return localOrders.byUser(email);
     const { collection, query, where, getDocs } = await import(

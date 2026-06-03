@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { AuthAPI } from '../services/api';
+import { EMAIL_PENDING } from '../services/supabaseAuth';
 
 const AuthContext = createContext(null);
 
@@ -24,9 +25,11 @@ export function AuthProvider({ children }) {
     user,
     ready,
     signUp: async (email, password) => {
-      const u = await AuthAPI.signUp(email, password);
-      setUser(u);
-      return u;
+      const result = await AuthAPI.signUp(email, password);
+      // 이메일 인증 대기 상태면 세션 없이 결과만 반환
+      if (result?.__type === EMAIL_PENDING) return result;
+      setUser(result);
+      return result;
     },
     signIn: async (email, password) => {
       const u = await AuthAPI.signIn(email, password);
